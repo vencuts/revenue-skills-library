@@ -1,0 +1,107 @@
+[
+  {
+    "id": "scenario_1_full_portfolio",
+    "description": "CSM with 25 accounts — mix of healthy, at-risk, and critical. Tests full 7-gate decision tree.",
+    "input": "Triage my portfolio. My email is sarah.chen@shopify.com",
+    "mock_data": {
+      "source": "bigquery",
+      "accounts": [
+        {"account_id": "001A1","account_name": "Gymshark","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Fashion","gmv_l365d": 45000000,"revenue_l12m": 1200000,"take_rate": 0.027,"gmv_growth_yoy": 0.22,"gmv_growth_qoq": 0.05,"risk_level": "Low","has_payments": 1,"has_shop_pay": 1,"has_flow": 1,"has_audiences": 1,"products_adopted": 5,"foundation_status": "Strong","sp_penetration": 0.85,"last_activity_date": "2026-03-18","days_since_activity": 5,"activity_count_l90": 8,"health_score": 88.2,"journey_stage": "Growth"},
+        {"account_id": "001A2","account_name": "Allbirds","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Fashion","gmv_l365d": 28000000,"revenue_l12m": 750000,"take_rate": 0.027,"gmv_growth_yoy": -0.18,"gmv_growth_qoq": -0.12,"risk_level": "High","has_payments": 1,"has_shop_pay": 1,"has_flow": 0,"has_audiences": 0,"products_adopted": 3,"foundation_status": "Building","sp_penetration": 0.62,"last_activity_date": "2026-02-01","days_since_activity": 50,"activity_count_l90": 1,"health_score": 42.1,"journey_stage": "Risk"},
+        {"account_id": "001A3","account_name": "Ruggable","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Home","gmv_l365d": 12000000,"revenue_l12m": 380000,"take_rate": 0.032,"gmv_growth_yoy": 0.08,"gmv_growth_qoq": 0.02,"risk_level": "Low","has_payments": 1,"has_shop_pay": 0,"has_flow": 1,"has_audiences": 0,"products_adopted": 3,"foundation_status": "At Risk","sp_penetration": 0.35,"last_activity_date": "2026-03-10","days_since_activity": 13,"activity_count_l90": 4,"health_score": 61.5,"journey_stage": "Foundations"},
+        {"account_id": "001A4","account_name": "Brooklinen","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Home","gmv_l365d": 8500000,"revenue_l12m": 290000,"take_rate": 0.034,"gmv_growth_yoy": -0.03,"gmv_growth_qoq": 0.01,"risk_level": "Medium","has_payments": 1,"has_shop_pay": 1,"has_flow": 1,"has_audiences": 1,"products_adopted": 5,"foundation_status": "Strong","sp_penetration": 0.72,"last_activity_date": "2026-03-15","days_since_activity": 8,"activity_count_l90": 5,"health_score": 71.3,"journey_stage": "Protect"},
+        {"account_id": "001A5","account_name": "MeUndies","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Fashion","gmv_l365d": 6200000,"revenue_l12m": 195000,"take_rate": 0.031,"gmv_growth_yoy": 0.15,"gmv_growth_qoq": 0.04,"risk_level": "Low","has_payments": 1,"has_shop_pay": 1,"has_flow": 0,"has_audiences": 0,"products_adopted": 3,"foundation_status": "Strong","sp_penetration": 0.91,"last_activity_date": "2026-01-15","days_since_activity": 67,"activity_count_l90": 0,"health_score": 76.8,"journey_stage": "Growth"},
+        {"account_id": "001A6","account_name": "Chubbies","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Fashion","gmv_l365d": 4100000,"revenue_l12m": 130000,"take_rate": 0.032,"gmv_growth_yoy": -0.08,"gmv_growth_qoq": -0.15,"risk_level": "Low","has_payments": 1,"has_shop_pay": 1,"has_flow": 0,"has_audiences": 0,"products_adopted": 3,"foundation_status": "Strong","sp_penetration": 0.68,"last_activity_date": "2026-03-20","days_since_activity": 3,"activity_count_l90": 6,"health_score": 58.4,"journey_stage": "Protect"},
+        {"account_id": "001A7","account_name": "FabFitFun","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Beauty","gmv_l365d": 3200000,"revenue_l12m": 98000,"take_rate": 0.031,"gmv_growth_yoy": 0.35,"gmv_growth_qoq": 0.10,"risk_level": "Low","has_payments": 0,"has_shop_pay": 0,"has_flow": 0,"has_audiences": 0,"products_adopted": 1,"foundation_status": "At Risk","sp_penetration": 0.0,"last_activity_date": "2026-03-12","days_since_activity": 11,"activity_count_l90": 3,"health_score": 52.0,"journey_stage": "Foundations"},
+        {"account_id": "001A8","account_name": "Pura Vida","csm_name": "Sarah Chen","csm_email": "sarah.chen@shopify.com","lead_name": "Aiko Lista","segment": "Mid-Market Scaled","region": "AMER","industry": "Fashion","gmv_l365d": 2800000,"revenue_l12m": 85000,"take_rate": 0.030,"gmv_growth_yoy": 0.05,"gmv_growth_qoq": 0.01,"risk_level": "Imminent Churn","has_payments": 1,"has_shop_pay": 1,"has_flow": 1,"has_audiences": 0,"products_adopted": 4,"foundation_status": "Strong","sp_penetration": 0.78,"last_activity_date": "2026-03-01","days_since_activity": 22,"activity_count_l90": 2,"health_score": 65.0,"journey_stage": "Risk"}
+      ]
+    },
+    "expected_classification": {
+      "act_now": ["Pura Vida", "Allbirds", "MeUndies"],
+      "monitor": ["Ruggable", "FabFitFun", "Chubbies"],
+      "healthy": ["Gymshark", "Brooklinen"]
+    },
+    "expected_escalations": ["Pura Vida"],
+    "expected_gates": {
+      "Pura Vida": "Gate 1 — Imminent Churn (auto-escalate)",
+      "Allbirds": "Gate 2 — High risk + 50d no activity (urgent)",
+      "MeUndies": "Gate 3 — Engagement overdue (67d, target 30d for Scaled/High)",
+      "Ruggable": "Gate 4 — Foundation gap (missing Shop Pay, $12M GMV)",
+      "FabFitFun": "Gate 4 — Foundation gap (missing Payments + Shop Pay)",
+      "Chubbies": "Gate 5 — Declining GMV (-8% YoY, accelerating -15% QoQ)",
+      "Gymshark": "Gate 7 — Healthy",
+      "Brooklinen": "Gate 7 — Healthy"
+    },
+    "validation_checks": [
+      "Pura Vida must appear FIRST in Act Now (Imminent Churn > High risk)",
+      "Allbirds must show both risk level AND engagement gap as reasons",
+      "MeUndies must reference 30-day target for Mid-Market Scaled/High Priority",
+      "Ruggable must flag Shop Pay specifically (has Payments but not Shop Pay)",
+      "FabFitFun must flag BOTH Payments and Shop Pay missing despite 35% YoY growth",
+      "Chubbies must note QoQ acceleration (-15%) on top of YoY decline",
+      "Output must include portfolio summary with % healthy/monitor/act-now",
+      "Output must include foundation stack summary",
+      "Output must NOT include NRR projections or quota data"
+    ]
+  },
+  {
+    "id": "scenario_2_no_data",
+    "description": "BQ unavailable — tests fallback to manual triage from user-provided list",
+    "input": "Triage my portfolio. BQ is down. Here are my accounts: Gymshark ($45M GMV, last call 5 days ago), Allbirds ($28M GMV, high risk, last call 50 days ago), Ruggable ($12M GMV, missing Shop Pay)",
+    "mock_data": {"source": "user_provided"},
+    "expected_classification": {
+      "act_now": ["Allbirds"],
+      "monitor": ["Ruggable"],
+      "healthy": ["Gymshark"]
+    },
+    "validation_checks": [
+      "Must execute reduced decision tree (Step 1b)",
+      "Must note which gates were skipped due to missing data",
+      "Must NOT fabricate health scores or SP penetration",
+      "Must classify Allbirds as Act Now based on high risk + 50d gap",
+      "Must flag Ruggable foundation gap even with partial data"
+    ]
+  },
+  {
+    "id": "scenario_3_empty_portfolio",
+    "description": "CSM email returns 0 accounts — tests error handling",
+    "input": "Triage the portfolio for jane.doe@shopify.com",
+    "mock_data": {"source": "bigquery", "accounts": []},
+    "expected_classification": null,
+    "validation_checks": [
+      "Must try fuzzy match with LIKE '%doe%'",
+      "Must suggest CSM may be inactive, on leave, or reassigned",
+      "Must NOT fabricate or guess at accounts"
+    ]
+  },
+  {
+    "id": "scenario_4_lead_requesting",
+    "description": "Lead asks to triage a specific CSM's book — tests role adaptation",
+    "input": "I'm Aiko Lista, a CS Lead. Can you triage Sarah Chen's portfolio?",
+    "mock_data": {"source": "bigquery", "accounts": "same as scenario_1"},
+    "validation_checks": [
+      "Must recognize this is a lead requesting for a CSM",
+      "Must use Sarah Chen's email for the query, not Aiko's",
+      "May suggest coaching-session-prep for deeper lead-focused analysis"
+    ]
+  },
+  {
+    "id": "scenario_5_all_999_activity",
+    "description": "All accounts show 999 days since activity — tests data quality detection",
+    "input": "Triage my portfolio. Email: sarah.chen@shopify.com",
+    "mock_data": {
+      "source": "bigquery",
+      "accounts": [
+        {"account_id": "001A1","account_name": "Gymshark","days_since_activity": 999,"risk_level": "Low","gmv_l365d": 45000000,"health_score": 75},
+        {"account_id": "001A2","account_name": "Allbirds","days_since_activity": 999,"risk_level": "High","gmv_l365d": 28000000,"health_score": 42},
+        {"account_id": "001A3","account_name": "Ruggable","days_since_activity": 999,"risk_level": "Low","gmv_l365d": 12000000,"health_score": 62}
+      ]
+    },
+    "validation_checks": [
+      "Must detect >80% accounts with 999 = data quality issue",
+      "Must warn about stale activity data",
+      "Must still triage on non-activity dimensions (risk, GMV, foundation)",
+      "Must NOT classify all accounts as engagement-overdue based on 999"
+    ]
+  }
+]
