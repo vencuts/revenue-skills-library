@@ -73,6 +73,8 @@ Before deep scoring, do a fast scan for red flags:
 
 If 3+ red flags: fast-track to "Needs Work" in Phase 3. Still do the full scoring in Phase 2 so the submitter gets actionable feedback.
 
+**Also check:** Does the skill reference any BQ tables that are being migrated? Cross-reference table names against known migration deadlines (e.g., `shopify-dw.sales.*` → `mart_revenue_data.*`). Flag stale table paths.
+
 ---
 
 ## Phase 2: Score
@@ -93,6 +95,8 @@ Read [references/quality-checklist.md](references/quality-checklist.md) and scor
 | **Total** | **100** | | |
 
 For each dimension, write a 1-line justification. Not "good" — specific: "Tools listed as table with 4 entries, fully-qualified names, but missing fallback sources = 8/10."
+
+**Score calibration note:** Skills from experienced SE/CSM contributors (Kiri, Elyse, Marshall) often arrive at 80+ because they encode deep domain knowledge. Don't grade on a curve — use the rubric as-is. A 91 is a 91.
 
 ### 2b. Compare self-reported vs actual score
 
@@ -159,7 +163,7 @@ Does an existing skill cover >60% of this workflow?
 
 | Decision | Criteria | Next step |
 |----------|----------|-----------|
-| **ACCEPT** | Score ≥ 70 + fills a library gap + no major overlap | Phase 4a |
+| **ACCEPT** | Score ≥ 70 + fills a library gap + no major overlap + SQL passes spot-check | Phase 4a |
 | **WEAVE** | Good insights but overlaps with existing skill | Phase 4b |
 | **ITERATE** | Score < 70 OR critical gaps but promising | Phase 4c |
 | **PERSONAL** | Useful to submitter but too niche for the library | Phase 4d |
