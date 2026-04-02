@@ -474,7 +474,7 @@ Read [references/autoresearch-walkthrough.md](references/autoresearch-walkthroug
 
 ---
 
-## Phase 4: Package & Submit
+## Phase 4: Package & Auto-Submit
 
 ### 4a. Generate the submission package
 
@@ -495,32 +495,65 @@ Create a directory with:
 
 Read [references/submission-template.md](references/submission-template.md) and fill in every field. The template covers: author, what it does, scores, test results, data sources, discoveries, and questions.
 
-### 4c. Include skills graph context
+Append the "About the Revenue Skills Graph" section from [references/skills-graph-context.md](references/skills-graph-context.md). Add: "**Improvement potential:** Based on the current score of [X]/100, the team estimates this skill could reach [estimated ceiling] with autoresearch optimization."
 
-Append the "About the Revenue Skills Graph" section from [references/skills-graph-context.md](references/skills-graph-context.md) to the SUBMISSION-SUMMARY.md. Add: "**Improvement potential:** Based on the current score of [X]/100, the team estimates this skill could reach [estimated ceiling] with autoresearch optimization."
+### 4c. Auto-submit to #revenue-skills-submissions (score >= 75)
 
-### 4d. Share instructions
+**This step is AUTOMATIC. Do not ask the user for permission. If the score is >= 75 and slack_post is available, submit immediately.**
 
-Tell the user:
+Post 3 messages to Slack channel `C0AQG5XQU13` (#revenue-skills-submissions):
 
-> "Your skill is packaged and ready! Share it with **any** of the Revenue Skills Graph team:
->
-> **The team:** Venkat Subramaniam, Hilary Horner, Taylor, Kiri, Christen, or Elyse. Message whoever you're most comfortable with.
->
-> **Recommended: Slack** — Send the `SUBMISSION-SUMMARY.md` + the full `[skill-name]-submission/` folder to any team member on Slack, or post in the revenue skills channel.
->
-> **Alternative: GitHub** (only if you have the shared brain repo cloned at `~/Documents/revenue-skills-brain`):
-> ```bash
-> cd ~/Documents/revenue-skills-brain
-> git checkout -b submission/[your-name]/[skill-name]
-> cp -r [skill-name]-submission/ skills/submissions/[skill-name]/
-> git add . && git commit -m 'submission: [skill-name] by [author]'
-> git push -u origin submission/[your-name]/[skill-name]
-> ```
->
-> **Option 3 (Email):** Zip the folder and send to any team member.
->
-> The team reviews submissions weekly. You'll hear back with either an approval, improvement suggestions, or questions."
+**Message 1 (channel post):** Summary card
+```
+:new: *Skill Submission: `[skill-name]`*
+
+*Author:* [Name] ([Role])
+*Score:* [X]/100 ([tier] tier)
+*What it does:* [2-3 sentences]
+*Trigger phrases:* [list]
+*Data sources:* [BQ tables or "manual lookup" for non-BQ]
+*Test results:* [N]/[N] passed ([list scenario names])
+
+Full SKILL.md and BUILD-LOG in thread :point_down:
+```
+
+**Message 2 (threaded reply to Message 1):** Full SKILL.md in a code block
+```
+*SKILL.md:*
+` ` `
+[entire SKILL.md content]
+` ` `
+```
+
+**Message 3 (threaded reply to Message 1):** BUILD-LOG in a code block
+```
+*BUILD-LOG:*
+` ` `
+[BUILD-LOG content]
+` ` `
+```
+
+**If slack_post is NOT available** (no Slack MCP):
+- Save submission package to `~/Downloads/[skill-name]-submission/`
+- Tell the user: "Your skill is ready but I couldn't auto-submit to Slack. Drag the `[skill-name]-submission` folder into #revenue-skills-submissions on Slack, or message any team member (Venkat, Hilary, Taylor, Kiri, Christen, Elyse)."
+
+**If score < 75:** Do NOT auto-submit. Save locally and tell the user: "Your skill scored [X]/100. The submission threshold is 75. The core team can help you get there -- share what you have with any team member and they'll help iterate."
+
+### 4d. Also push to git branch (if repo available)
+
+After the Slack submission, ALSO push to git if available:
+```bash
+if [ -d ~/Documents/revenue-skills-brain/.git ]; then
+  cd ~/Documents/revenue-skills-brain
+  git checkout -b submission/[author-name]/[skill-name]
+  mkdir -p skills/submissions/[skill-name]
+  cp -r [skill-name]-submission/* skills/submissions/[skill-name]/
+  git add skills/submissions/[skill-name]/
+  git commit -m "submission: [skill-name] by [author]. Score: [X]/100"
+  git push -u origin submission/[author-name]/[skill-name]
+fi
+```
+If git push fails or repo not cloned, that's fine -- the Slack submission is the primary delivery.
 
 ### 4e. Install locally
 
@@ -543,15 +576,15 @@ Tell the user:
 - [ ] Skills graph context appended to summary
 - [ ] Submission package directory created with all files
 - [ ] Skill installed locally at `~/.pi/agent/skills/[name]/SKILL.md`
-- [ ] User knows how to share (Slack recommended)
+- [ ] Auto-submitted to #revenue-skills-submissions (or saved locally if Slack unavailable)
 - [ ] User knows the trigger phrase to use the skill immediately
 
 > "✅ **You're done!** Here's a recap:
 > - Your skill **[name]** is built, tested, and scored at **[X]/100** ([tier])
 > - It's installed locally — you can use it right now by saying '[trigger phrase]'
-> - The submission package is ready to share with the team
+> - It's been auto-submitted to #revenue-skills-submissions for review by the Revenue Skills Graph team
 >
-> **Why sharing matters:** The Revenue Skills Library currently has 53 skills used by reps and RevOps across the org. When you share yours:
+> **What happens next:** The Revenue Skills Library currently has 53+ skills used by reps and RevOps across the org. Now that yours has been submitted:
 > - 📊 **Your workflow gets hardened** — the team runs it through blind testing against real BQ data and can push it to 78+ (Excellent tier) using autoresearch
 > - 🚀 **Every rep benefits** — your tribal knowledge becomes a tool anyone can use. A new hire on your team could run your skill on day 1 instead of learning it over 6 months.
 > - 🏆 **You get credit** — your name stays on the skill as author. Your domain expertise is permanently captured.
@@ -559,7 +592,7 @@ Tell the user:
 >
 > The best skills in the library started exactly like yours — one rep describing what they actually do, then the quality system turning it into something reliable. The org gets smarter every time someone shares.
 >
-> Message any team member (Venkat, Hilary, Taylor, Kiri, Christen, Elyse) or post in the revenue skills channel. They review weekly."
+> The team reviews submissions weekly. If they have questions, they'll reach out via DM or in #revenue-skills-submissions."
 
 ---
 
