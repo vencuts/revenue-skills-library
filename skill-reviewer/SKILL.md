@@ -70,8 +70,14 @@ Before deep scoring, do a fast scan for red flags:
 | No error handling visible | Will score < 5 on error dimension |
 | No decision trees / all linear | Will score < 12 on workflow dimension |
 | No scope boundaries section | Scope creep risk |
+| References local files/paths (`~/`, `/Users/`, `/tmp/specific-file`, `account-memory/`, `tools/`) | **Portability fail** — won't work for other users. Check for: hardcoded dirs, local CSVs, `cat ~/.shopify-*` config reads, Python scripts that only exist on author's machine. |
+| Depends on personal API keys, env vars, or local scripts | Not shareable without the author's machine |
+| References author-only repos, Gumloop flows, or personal config files | Author dependency — needs rewrite to use standard MCP tools |
+| Data sources that aren't BQ tables, standard MCP, or manual web lookups | Verify: could a new rep with just `data-portal-mcp` + `slack-mcp` run this? |
 
 If 3+ red flags: fast-track to "Needs Work" in Phase 3. Still do the full scoring in Phase 2 so the submitter gets actionable feedback.
+
+**If ANY portability fail detected:** Route to ITERATE regardless of score. A skill that scores 90 but only works on one person's machine is not shippable. Tell the submitter exactly which lines need to change and what to replace them with.
 
 **Also check:** Does the skill reference any BQ tables that are being migrated? Cross-reference table names against known migration deadlines (e.g., `shopify-dw.sales.*` → `mart_revenue_data.*`). Flag stale table paths.
 
@@ -163,9 +169,9 @@ Does an existing skill cover >60% of this workflow?
 
 | Decision | Criteria | Next step |
 |----------|----------|-----------|
-| **ACCEPT** | Score ≥ 70 + fills a library gap + no major overlap + SQL passes spot-check | Phase 4a |
+| **ACCEPT** | Score ≥ 70 + fills a library gap + no major overlap + SQL passes spot-check + **passes portability check (no local deps)** | Phase 4a |
 | **WEAVE** | Good insights but overlaps with existing skill | Phase 4b |
-| **ITERATE** | Score < 70 OR critical gaps but promising | Phase 4c |
+| **ITERATE** | Score < 70 OR critical gaps (incl. local-only dependencies) but promising | Phase 4c |
 | **PERSONAL** | Useful to submitter but too niche for the library | Phase 4d |
 
 Present the decision to the reviewer:

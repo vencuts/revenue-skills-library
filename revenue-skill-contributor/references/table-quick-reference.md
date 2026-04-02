@@ -37,7 +37,8 @@ Most-used tables by domain. All names are fully-qualified (`project.dataset.tabl
 
 | Table | What it has | Key columns |
 |-------|------------|-------------|
-| `shopify-dw.rpt_salesforce_banff.quota` | Rep quota targets | `user_id`, `quota_amount`, `period_start`, `period_end` |
+| `shopify-dw.people.incentive_compensation_monthly_quotas` | Individual rep quota targets (2026+) | `worker_id`, `month`, `metric` (billed_revenue/NRR/SALs/solution_activations/total_ads_spend), `amount` |
+| `sdp-for-analysts-platform.rev_ops_prod.RPI_base_attainment_with_billed_events` | Attainment + quota (pre-joined) | `worker_id`, `metric`, `quota`, `credit`, `attainment` |
 
 **Formula for pipeline coverage:**
 ```sql

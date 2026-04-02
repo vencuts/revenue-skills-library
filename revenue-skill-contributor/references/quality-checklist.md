@@ -125,3 +125,5 @@ Skills that plateau at 72 usually need these specific improvements to reach 78+:
 | "Analyze the data" | Too vague, agent improvises | Specify exact checks and thresholds |
 | No negative boundaries | Skill scope creeps | Add "This skill does NOT..." section |
 | Single output format | Doesn't adapt to findings | Add conditional formatting |
+| Local file/path dependencies (e.g., `~/Documents/`, `my-data.csv`) | Skill only works on author's machine | Replace with MCP tools, BQ queries, or Slack search — universal sources only |
+| Personal env/config assumptions (API keys, local scripts, env vars) | Other users don't have your setup | Use tool discovery (e.g., `data-portal-mcp`) instead of hardcoded paths |

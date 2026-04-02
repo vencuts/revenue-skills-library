@@ -416,6 +416,14 @@ Do not auto-fix without explaining WHY. The user learns the quality standard thr
 - [ ] All test failures fixed and re-verified
 - [ ] Scored across all 7 rubric dimensions (scores recorded)
 - [ ] Self-check done: skill still matches user's actual workflow
+- [ ] **Portability check** (MANDATORY — scan the SKILL.md for ALL of these):
+  - No hardcoded local file paths (`~/`, `/Users/`, `/tmp/specific-file`, `account-memory/`, `tools/`)
+  - No personal API keys, env vars, or tokens
+  - No references to author-only repos, scripts, or config files
+  - No Python scripts or local tools that only exist on the author's machine
+  - No `cat ~/.shopify-*` or similar personal config reads
+  - Every data source is either a BQ table (fully qualified) OR a standard MCP tool OR a manual web lookup
+  - Test: could a brand new rep with just `data-portal-mcp` and `slack-mcp` run this skill? If not, fix it.
 - [ ] Score is ≥70 OR 5 iterations exhausted with honest "v1" message
 - [ ] User confirmed "this looks right" after final iteration
 
@@ -497,49 +505,74 @@ Read [references/submission-template.md](references/submission-template.md) and 
 
 Append the "About the Revenue Skills Graph" section from [references/skills-graph-context.md](references/skills-graph-context.md). Add: "**Improvement potential:** Based on the current score of [X]/100, the team estimates this skill could reach [estimated ceiling] with autoresearch optimization."
 
-### 4c. Auto-submit to #revenue-skills-submissions (score >= 75)
+### 4c. Package the submission zip
 
-**This step is AUTOMATIC. Do not ask the user for permission. If the score is >= 75 and slack_post is available, submit immediately.**
+**Before anything else, create the zip package.** This is the source of truth — not a Slack message.
 
-Post 3 messages to Slack channel `C0AQG5XQU13` (#revenue-skills-submissions):
+```bash
+# Create submission directory
+mkdir -p ~/Downloads/[skill-name]-submission
 
-**Message 1 (channel post):** Summary card
+# Copy all skill files
+cp SKILL.md ~/Downloads/[skill-name]-submission/
+cp BUILD-LOG.md ~/Downloads/[skill-name]-submission/
+
+# Copy references if the skill has any
+if [ -d references/ ]; then
+  cp -r references/ ~/Downloads/[skill-name]-submission/references/
+fi
+
+# Copy test results if they exist
+if [ -d test-results/ ]; then
+  cp -r test-results/ ~/Downloads/[skill-name]-submission/test-results/
+fi
+
+# Create the zip
+cd ~/Downloads && zip -r [skill-name]-submission.zip [skill-name]-submission/
 ```
-:new: *Skill Submission: `[skill-name]`*
+
+Verify the zip exists and is non-empty:
+```bash
+ls -la ~/Downloads/[skill-name]-submission.zip
+```
+
+### 4d. Auto-post notification to #revenue-skills-submissions (score >= 75)
+
+**If score >= 75 and slack_post is available, post the SHORT summary automatically.** Do NOT post the full SKILL.md — it's too long for Slack.
+
+Post ONE message to Slack channel `C0AQG5XQU13` (#revenue-skills-submissions):
+
+```
+:new: *Skill Submission: `[skill-name]`* ([X]/100 — [tier] tier)
 
 *Author:* [Name] ([Role])
-*Score:* [X]/100 ([tier] tier)
 *What it does:* [2-3 sentences]
 *Trigger phrases:* [list]
 *Data sources:* [BQ tables or "manual lookup" for non-BQ]
-*Test results:* [N]/[N] passed ([list scenario names])
+*Test results:* [N]/[N] passed
 
-Full SKILL.md and BUILD-LOG in thread :point_down:
+:file_folder: Submission package saved to `~/Downloads/[skill-name]-submission.zip` — please attach it in this thread :point_down:
 ```
 
-**Message 2 (threaded reply to Message 1):** Full SKILL.md in a code block
-```
-*SKILL.md:*
-` ` `
-[entire SKILL.md content]
-` ` `
-```
+**IMPORTANT — after the Slack post, tell the user:**
+> "✅ Your submission notification was posted to #revenue-skills-submissions.
+>
+> **One more step:** Open Slack → go to #revenue-skills-submissions → find your submission post → drag `~/Downloads/[skill-name]-submission.zip` into that thread.
+>
+> That's it — the review team will have everything they need."
 
-**Message 3 (threaded reply to Message 1):** BUILD-LOG in a code block
-```
-*BUILD-LOG:*
-` ` `
-[BUILD-LOG content]
-` ` `
-```
+**If the Slack post FAILS** (not a member, no Slack MCP, any error):
+> "The Slack notification couldn't be posted. Here's what to do:
+> 1. Join #revenue-skills-submissions in Slack (it's a public channel)
+> 2. Post this message:"
 
-**If slack_post is NOT available** (no Slack MCP):
-- Save submission package to `~/Downloads/[skill-name]-submission/`
-- Tell the user: "Your skill is ready but I couldn't auto-submit to Slack. Drag the `[skill-name]-submission` folder into #revenue-skills-submissions on Slack, or message any team member (Venkat, Hilary, Taylor, Kiri, Christen, Elyse)."
+Then show them the summary text above to copy-paste.
 
-**If score < 75:** Do NOT auto-submit. Save locally and tell the user: "Your skill scored [X]/100. The submission threshold is 75. The core team can help you get there -- share what you have with any team member and they'll help iterate."
+> "3. Then drag `~/Downloads/[skill-name]-submission.zip` into that same thread."
 
-### 4d. Also push to git branch (if repo available)
+**If score < 75:** Do NOT auto-submit. Save the zip locally and tell the user: "Your skill scored [X]/100. The submission threshold is 75. The core team can help you get there — share what you have with any team member and they'll help iterate. Your package is saved at `~/Downloads/[skill-name]-submission.zip` in case you want to share it directly."
+
+### 4e. Also push to git branch (if repo available)
 
 After the Slack submission, ALSO push to git if available:
 ```bash
@@ -555,7 +588,7 @@ fi
 ```
 If git push fails or repo not cloned, that's fine -- the Slack submission is the primary delivery.
 
-### 4e. Install locally
+### 4f. Install locally
 
 Also install the skill for the user's own agent:
 
@@ -566,7 +599,7 @@ cp SKILL.md ~/.pi/agent/skills/[skill-name]/SKILL.md
 
 > "Your skill is also installed locally — you can start using it right now. Just say '[trigger phrase]' and your AI agent will run it."
 
-### 4f. Closing message
+### 4g. Closing message
 
 Tell the user:
 **✅ Phase 4 Final Checklist** (verify ALL before closing):
@@ -582,7 +615,8 @@ Tell the user:
 > "✅ **You're done!** Here's a recap:
 > - Your skill **[name]** is built, tested, and scored at **[X]/100** ([tier])
 > - It's installed locally — you can use it right now by saying '[trigger phrase]'
-> - It's been auto-submitted to #revenue-skills-submissions for review by the Revenue Skills Graph team
+> - A notification was posted to #revenue-skills-submissions — make sure you attached the zip in that thread!
+> - Your full submission package is at `~/Downloads/[skill-name]-submission.zip`
 >
 > **What happens next:** The Revenue Skills Library currently has 53+ skills used by reps and RevOps across the org. Now that yours has been submitted:
 > - 📊 **Your workflow gets hardened** — the team runs it through blind testing against real BQ data and can push it to 78+ (Excellent tier) using autoresearch
